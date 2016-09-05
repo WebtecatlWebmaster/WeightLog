@@ -19,10 +19,10 @@ define('DOMINIO', "localhost/weightlog");
 define('RAIZ', '');        
 //ESTABLECE EL PROTOCO HTTP/HTTPS
 define('PROTOCOLO', 'http');
-//ESTABLECE EL TITULO DEL SITIO.
-define('TITULOSITIO', 'WeightLog/Bitacora de Peso');
 //ESTABLECE EL IDIOMA DEL SITIO.
 define('IDIOMA', 'es');
 //ESTABLECE EL DOCTYPE DEL SITIO.
 define('DOCTYPE', '<!DOCTYPE HTML>');
+//ESTABLECE EL TITULO DEL SITIO.
+define('TITULOSITIO', 'WeightLog/Bitacora de Peso');
 ?>
