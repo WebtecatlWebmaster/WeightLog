@@ -12,8 +12,8 @@ class BaseDatosFunciones
         $this->conectar();        
         if($this->conexionSatisfactoria)
         {
-            mysqli_query($this->conexion,$sql);    
-            $registroModificado = mysqli_affected_rows($this->conexion);                     
+            $this->conexion->query($sql);    
+            $registroModificado = $this->conexion->affected_rows;                     
             $this->desconectar();
         }
         return $registroModificado;
@@ -26,8 +26,8 @@ class BaseDatosFunciones
         $this->conectar();        
         if($this->conexionSatisfactoria)
         {
-            mysqli_query($this->conexion,$sql);    
-            $registroModificado = mysqli_affected_rows($this->conexion);                     
+            $this->conexion->query($sql);    
+            $registroModificado = $this->conexion->affected_rows;
             $this->desconectar();
         }
         else
@@ -44,14 +44,14 @@ class BaseDatosFunciones
         if($this->conexionSatisfactoria)
         {
             $items = array();
-            $rsItems = mysqli_query($this->conexion,$sql);
-            if(mysqli_num_rows($rsItems) > 0)
+            $rsItems = $this->conexion->query($sql);
+            if($rsItems->num_rows > 0)
             {
-                while($rsItem = mysqli_fetch_assoc($rsItems))
+                while($rsItem = $rsItems->fetch_assoc())
                 {
                     $items[]=$rsItem;   
                 }
-                mysqli_free_result($rsItems);
+                $rsItems->free();
                 $this->desconectar();
             }
         }
@@ -70,8 +70,8 @@ class BaseDatosFunciones
         $this->conectar();
         if($this->conexionSatisfactoria)
         {                    
-            mysqli_query($this->conexion,$sql);
-            $registroModificado = mysqli_affected_rows($this->conexion);
+            $this->conexion->query($sql);
+            $registroModificado = $this->conexion->affected_rows;
             $this->desconectar();
         }
         else
@@ -88,8 +88,8 @@ class BaseDatosFunciones
         $this->conectar();
         if($this->conexionSatisfactoria)
         {            
-            mysqli_query($this->conexion,$sql);    
-            $idUltimoRegistro = mysqli_insert_id($this->conexion);             
+            $this->conexion->query($sql);    
+            $idUltimoRegistro = $this->conexion->insert_id;
             $this->desconectar();
         }
         else
@@ -102,7 +102,7 @@ class BaseDatosFunciones
     private function conectar()
     {
         //Abrir un conexion a base de datos.
-        $conexion=mysqli_connect(BDIP,BDUSUARIO,BDCONTRASENA,BASEDATOS);
+        $conexion = new mysqli(BDIP,BDUSUARIO,BDCONTRASENA,BASEDATOS);
         if($conexion)
         {
             $this->conexion=$conexion;
@@ -113,7 +113,7 @@ class BaseDatosFunciones
     private function desconectar()
     {
         //Cerar la conexion a la base de datos.
-        mysqli_close($this->conexion);
+        $this->conexion->close();
     }
 }
 ?>
